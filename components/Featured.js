@@ -1,5 +1,10 @@
 import styled from "styled-components";
 import Center from "./Center";
+import Button from "./Button";
+import ButtonLink from "./ButtonLink";
+import CartIcon from "./icons/CartIcon";
+import { useContext } from "react";
+import { CartContext } from "./CartContext";
 
 const Bg = styled.div`
   background-color: #222;
@@ -10,6 +15,7 @@ const Bg = styled.div`
 const Title = styled.h1`
   margin: 0;
   font-weight: normal;
+  font-size: 3rem;
 `;
 
 const Desc = styled.p`
@@ -17,9 +23,9 @@ const Desc = styled.p`
   font-size: 0.8rem;
 `;
 
-const Wrapper = styled.div`
+const ColumnsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 40px;
   img{
     max-width: 100%;
@@ -31,23 +37,39 @@ const Column = styled.div`
   align-items: center;
 `;
 
-export default function Featured() {
+const ButtonsWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+`
+
+export default function Featured({product}) {
+  const {addProduct} = useContext(CartContext);
+  function addFeaturedToCart(){
+    addProduct(product._id);
+  }
+
   return (
     <Bg>
       <Center>
-        <Wrapper>
+        <ColumnsWrapper>
           <Column>
             <div>
-              <Title>Pro anywhere</Title>
-              <Desc>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Desc>
+              <Title>{product.title}</Title>
+              <Desc>{product.description}</Desc>
+              <ButtonsWrapper>
+                <ButtonLink href={'/products/'+product._id} outline={1} white={1}>Read more...</ButtonLink>
+                <Button white onClick={addFeaturedToCart}>
+                  <CartIcon />
+                  Add to Cart
+                </Button>
+              </ButtonsWrapper>
             </div>
           </Column>
           <Column>
-            <img src="http://res.cloudinary.com/dwafjr7ry/image/upload/v1708080571/fpj9wvydu3oel2iactrz.jpg" />
+            <img src="https://res.cloudinary.com/dwafjr7ry/image/upload/v1708470792/1679151719649_ynui0p.png" />
           </Column>
-        </Wrapper>
+        </ColumnsWrapper>
 
       </Center>
     </Bg>
