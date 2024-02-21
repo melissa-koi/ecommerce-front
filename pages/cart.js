@@ -63,6 +63,9 @@ export default function CartPage() {
   function lessProduct(id) {
     removeProduct(id);
   }
+
+  let total = 0;
+
   return (
     <>
       <Header />
